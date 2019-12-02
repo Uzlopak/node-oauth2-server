@@ -52,11 +52,13 @@ export class ImplicitGrantType extends AbstractGrantType {
     const accessToken = await this.generateAccessToken(client, user, scope);
     const accessTokenExpiresAt = this.getAccessTokenExpiresAt();
 
-    const token = {
+    const token: Token = {
       accessToken,
       accessTokenExpiresAt,
       scope: validatedScope,
-    } as Token;
+      client,
+      user,
+    };
 
     return this.model.saveToken(token, client, user);
   }

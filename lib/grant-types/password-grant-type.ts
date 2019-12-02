@@ -95,13 +95,15 @@ export class PasswordGrantType extends AbstractGrantType {
     const accessTokenExpiresAt = this.getAccessTokenExpiresAt();
     const refreshTokenExpiresAt = this.getRefreshTokenExpiresAt();
 
-    const token = {
+    const token: Token = {
       accessToken,
       accessTokenExpiresAt,
       refreshToken,
       refreshTokenExpiresAt,
       scope: accessScope,
-    } as Token;
+      client,
+      user,
+    };
 
     return this.model.saveToken(token, client, user);
   }

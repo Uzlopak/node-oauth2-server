@@ -195,7 +195,9 @@ export class AuthorizationCodeGrantType extends AbstractGrantType {
       refreshToken,
       refreshTokenExpiresAt,
       scope: accessScope,
-    } as any;
+      client,
+      user,
+    };
 
     return this.model.saveToken(token, client, user);
   }

@@ -5,7 +5,7 @@ import {
   InvalidRequestError,
   ServerError,
 } from '../errors';
-import { Client, RefreshToken, User } from '../interfaces';
+import { Client, RefreshToken, Token, User } from '../interfaces';
 import { Request } from '../request';
 import * as is from '../validator/is';
 
@@ -140,10 +140,12 @@ export class RefreshTokenGrantType extends AbstractGrantType {
     const accessTokenExpiresAt = this.getAccessTokenExpiresAt();
     const refreshTokenExpiresAt = this.getRefreshTokenExpiresAt();
 
-    const token: any = {
+    const token: Token = {
       accessToken,
       accessTokenExpiresAt,
       scope,
+      client,
+      user,
     };
 
     if (this.alwaysIssueNewRefreshToken !== false) {

@@ -108,12 +108,14 @@ export class CodeResponseType {
     redirectUri: any,
     user: User,
   ) {
-    const code = {
+    const code: AuthorizationCode = {
       authorizationCode,
       expiresAt,
       redirectUri,
       scope,
-    } as AuthorizationCode;
+      client,
+      user,
+    };
 
     return this.model.saveAuthorizationCode(code, client, user);
   }
