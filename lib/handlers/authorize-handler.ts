@@ -90,16 +90,18 @@ export class AuthorizeHandler {
     const user = await this.getUser(request, response);
 
     let scope: string;
-    let state: string;
+    let state: string | undefined;
     let RequestedResponseType: any;
     let responseType: any;
     const uri = this.getRedirectUri(request, client);
     try {
+      // Pull out the state first, because RFC 6749, 4.1.2.1 requires us
+      // to provide the `state` in errors when it was provided in the request.
+      state = this.getState(request);
       const requestedScope = this.getScope(request);
 
       const validScope = await this.validateScope(user, client, requestedScope);
       scope = validScope;
-      state = this.getState(request);
       RequestedResponseType = this.getResponseType(request, client);
       responseType = new RequestedResponseType(this.options);
       const codeOrAccessToken = await responseType.handle(

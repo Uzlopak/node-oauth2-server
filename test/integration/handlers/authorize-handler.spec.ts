@@ -416,7 +416,7 @@ describe('AuthorizeHandler integration', () => {
           response
             .get('location')
             .should.equal(
-              'http://example.com/cb?error=invalid_scope&error_description=Invalid%20parameter%3A%20%60scope%60',
+              'http://example.com/cb?error=invalid_scope&error_description=Invalid%20parameter%3A%20%60scope%60&state=foobar',
             );
         });
     });
