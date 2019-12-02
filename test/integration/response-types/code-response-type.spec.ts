@@ -142,7 +142,7 @@ describe('CodeResponseType integration', () => {
 
       return handler
         .generateAuthorizationCode(undefined, undefined, undefined)
-        .then((data: any) => {
+        .then(data => {
           data.should.be.a.sha1();
         });
     });

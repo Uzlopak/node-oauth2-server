@@ -631,7 +631,7 @@ describe('AuthorizeHandler integration', () => {
   //       authorizationCodeLifetime: 120,
   //       model,
   //     });
-  //     const data: any = await handler.generateAuthorizationCode(
+  //     const data = await handler.generateAuthorizationCode(
   //       undefined,
   //       undefined,
   //       undefined,

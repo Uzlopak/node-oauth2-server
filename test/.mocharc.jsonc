@@ -1,5 +1,5 @@
 {
-  "require": ["ts-node/register", "should", "test/assertions"],
+  "require": ["ts-node/register", "should", "test/assertions.ts"],
   "reporter": "spec",
   "slow": 75,
   "timeout": 2000,

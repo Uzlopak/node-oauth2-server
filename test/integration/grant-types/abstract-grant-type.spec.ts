@@ -64,7 +64,7 @@ describe('AbstractGrantType integration', () => {
         model: {},
         refreshTokenLifetime: 456,
       });
-      const data: any = await handler.generateAccessToken();
+      const data = await handler.generateAccessToken();
       data.should.be.a.sha1();
     });
 
@@ -106,7 +106,7 @@ describe('AbstractGrantType integration', () => {
         model: {},
         refreshTokenLifetime: 456,
       });
-      const data: any = await handler.generateRefreshToken();
+      const data = await handler.generateRefreshToken();
       data.should.be.a.sha1();
     });
 
