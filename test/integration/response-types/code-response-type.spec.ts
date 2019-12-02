@@ -166,24 +166,24 @@ describe('CodeResponseType integration', () => {
         .should.be.an.instanceOf(Promise);
     });
 
-    // it('should support non-promises', () => {
-    //   const model = {
-    //     generateAuthorizationCode: () => {
-    //       return {};
-    //     },
-    //     getAccessToken: () => {},
-    //     getClient: () => {},
-    //     saveAuthorizationCode: () => {},
-    //   };
-    //   const handler = new CodeResponseType({
-    //     authorizationCodeLifetime: 120,
-    //     model,
-    //   });
+    it('should support non-promises', () => {
+      const model = {
+        generateAuthorizationCode: () => {
+          return {};
+        },
+        getAccessToken: () => {},
+        getClient: () => {},
+        saveAuthorizationCode: () => {},
+      };
+      const handler = new CodeResponseType({
+        authorizationCodeLifetime: 120,
+        model,
+      });
 
-    //   handler
-    //     .generateAuthorizationCode({id: 'test', grants: []}, {}, '')
-    //     .should.be.an.instanceOf(Promise);
-    // });
+      handler
+        .generateAuthorizationCode({id: 'test', grants: []}, {}, '')
+        .should.be.an.instanceOf(Promise);
+    });
   });
 
   describe('getAuthorizationCodeExpiresAt()', () => {
