@@ -12,6 +12,7 @@
     "downlevelIteration": false,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false,
+    "strictNullChecks": true,
     "moduleResolution": "node",
     "lib": ["es2018"]
   },

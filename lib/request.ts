@@ -28,10 +28,6 @@ export class Request {
       throw new InvalidArgumentError('Missing parameter: `method`');
     }
 
-    if (typeof options.method !== 'string') {
-      throw new InvalidArgumentError('Invalid parameter: `method`');
-    }
-
     if (!options.query) {
       throw new InvalidArgumentError('Missing parameter: `query`');
     }
