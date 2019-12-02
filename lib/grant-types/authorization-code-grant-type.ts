@@ -95,7 +95,7 @@ export class AuthorizationCodeGrantType extends AbstractGrantType {
 
     if (code.client.id !== client.id) {
       throw new InvalidGrantError(
-        'Invalid grant: authorization code is invalid',
+        'Invalid grant: authorization code has unexpected client id',
       );
     }
 

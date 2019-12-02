@@ -528,7 +528,7 @@ describe('AuthorizationCodeGrantType integration', () => {
         .catch(e => {
           e.should.be.an.instanceOf(InvalidGrantError);
           e.message.should.equal(
-            'Invalid grant: authorization code is invalid',
+            'Invalid grant: authorization code has unexpected client id',
           );
         });
     });
