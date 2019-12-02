@@ -48,8 +48,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "tslint -p tsconfig.build.json -c tslint.json",
-    "lint:all": "tslint -p tsconfig.json -c tslint.json",
+    "lint": "npm-run-all lint:*",
+    "lint:prod": "tslint -p tsconfig.build.json -c tslint.json",
+    "lint:test": "tslint -p tsconfig.json -c test/tslint.json 'test/**/*'",
     "build:clean": "shx rm -rf ./dist",
     "build": "npm-run-all build:clean build:test:*",
     "build:test:src": "tsc -p tsconfig.json",
