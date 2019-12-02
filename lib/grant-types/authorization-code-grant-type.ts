@@ -65,7 +65,7 @@ export class AuthorizationCodeGrantType extends AbstractGrantType {
    * Get the authorization code.
    */
 
-  async getAuthorizationCode(request: Request, client: Client) {
+  async getAuthorizationCode(request: Request, client: Client): Promise<AuthorizationCode> {
     if (!request.body.code) {
       throw new InvalidRequestError('Missing parameter: `code`');
     }

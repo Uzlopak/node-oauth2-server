@@ -3,16 +3,16 @@ import { hasOwnProperty } from '../utils/fn';
 
 export class BearerTokenType {
   accessToken: string;
-  accessTokenLifetime: number;
+  accessTokenLifetime?: number;
   refreshToken: string;
   scope: string;
   customAttributes: any;
   constructor(
     accessToken: string,
-    accessTokenLifetime: number,
+    accessTokenLifetime: number | undefined,
     refreshToken: string,
     scope: string,
-    customAttributes: any,
+    customAttributes?: any,
   ) {
     if (!accessToken) {
       throw new InvalidArgumentError('Missing parameter: `accessToken`');

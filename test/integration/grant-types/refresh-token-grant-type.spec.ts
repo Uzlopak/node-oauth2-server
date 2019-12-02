@@ -6,6 +6,7 @@ import {
   ServerError,
 } from '../../../lib/errors';
 import { RefreshTokenGrantType } from '../../../lib/grant-types';
+import { Client } from '../../../lib/interfaces';
 import { Request } from '../../../lib/request';
 
 /**
@@ -87,7 +88,7 @@ describe('RefreshTokenGrantType integration', () => {
       });
 
       try {
-        await grantType.handle(undefined, undefined);
+        await grantType.handle(undefined as unknown as Request, {id: 'test', grants: []});
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -114,7 +115,7 @@ describe('RefreshTokenGrantType integration', () => {
       });
 
       try {
-        await grantType.handle(request, undefined);
+        await grantType.handle(request, undefined as unknown as Client);
 
         should.fail('should.fail', '');
       } catch (e) {

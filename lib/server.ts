@@ -36,7 +36,7 @@ export class OAuth2Server {
 
   async authenticate(
     request: Request,
-    response?: Response,
+    response: Response,
     options?: string | any,
   ) {
     let opt = options;

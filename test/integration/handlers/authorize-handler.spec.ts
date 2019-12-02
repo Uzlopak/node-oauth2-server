@@ -149,7 +149,7 @@ describe('AuthorizeHandler integration', () => {
       });
 
       try {
-        await handler.handle(undefined, undefined);
+        await handler.handle(undefined as unknown as Request, new Response());
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -178,8 +178,7 @@ describe('AuthorizeHandler integration', () => {
       });
 
       try {
-        await handler.handle(request, undefined);
-
+        await handler.handle(request, undefined as unknown as Response);
         should.fail('should.fail', '');
       } catch (e) {
         e.should.be.an.instanceOf(InvalidArgumentError);

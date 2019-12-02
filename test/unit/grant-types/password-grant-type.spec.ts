@@ -1,6 +1,7 @@
 import * as should from 'should';
 import * as sinon from 'sinon';
 import { PasswordGrantType } from '../../../lib/grant-types';
+import { Client } from '../../../lib/interfaces';
 import { Request } from '../../../lib/request';
 
 /**
@@ -35,7 +36,7 @@ describe('PasswordGrantType', () => {
 
   describe('saveToken()', () => {
     it('should call `model.saveToken()`', async () => {
-      const client: any = {};
+      const client: Client = { id: 'test', grants: [] };
       const user = {};
       const model = {
         getUser() {},
@@ -57,9 +58,11 @@ describe('PasswordGrantType', () => {
       model.saveToken.firstCall.args[0].should.eql({
         accessToken: 'foo',
         accessTokenExpiresAt: 'biz',
+        client,
         refreshToken: 'bar',
         refreshTokenExpiresAt: 'baz',
         scope: 'foobar',
+        user,
       });
       model.saveToken.firstCall.args[1].should.equal(client);
       model.saveToken.firstCall.args[2].should.equal(user);

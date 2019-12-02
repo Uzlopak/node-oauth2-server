@@ -25,6 +25,7 @@ export class OAuthError extends Error {
       .filter(key => !ignoreAttr.includes(key))
       .forEach(key => (this[key] = props[key]));
 
+    // XXX: Is this really needed?
     Error.captureStackTrace(this, OAuthError);
   }
 }

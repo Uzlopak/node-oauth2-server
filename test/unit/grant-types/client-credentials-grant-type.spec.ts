@@ -1,6 +1,7 @@
 import * as should from 'should';
 import * as sinon from 'sinon';
 import { ClientCredentialsGrantType } from '../../../lib/grant-types';
+import { Client } from '../../../lib/interfaces';
 
 /**
  * Test `ClientCredentialsGrantType`.
@@ -9,6 +10,7 @@ import { ClientCredentialsGrantType } from '../../../lib/grant-types';
 describe('ClientCredentialsGrantType', () => {
   describe('getUserFromClient()', () => {
     it('should call `model.getUserFromClient()`', async () => {
+      const client: Client = { id: 'test', grants: [] };
       const model = {
         getUserFromClient: sinon.stub().returns(true),
         saveToken() {},
@@ -17,7 +19,6 @@ describe('ClientCredentialsGrantType', () => {
         accessTokenLifetime: 120,
         model,
       });
-      const client: any = {};
       await handler.getUserFromClient(client);
       model.getUserFromClient.callCount.should.equal(1);
       model.getUserFromClient.firstCall.args.should.have.length(1);
@@ -28,7 +29,7 @@ describe('ClientCredentialsGrantType', () => {
 
   describe('saveToken()', () => {
     it('should call `model.saveToken()`', async () => {
-      const client: any = {};
+      const client: Client = { id: 'test', grants: [] };
       const user = {};
       const model = {
         getUserFromClient() {},
@@ -48,7 +49,9 @@ describe('ClientCredentialsGrantType', () => {
       model.saveToken.firstCall.args[0].should.eql({
         accessToken: 'foo',
         accessTokenExpiresAt: 'biz',
+        client,
         scope: 'foobar',
+        user,
       });
       model.saveToken.firstCall.args[1].should.equal(client);
       model.saveToken.firstCall.args[2].should.equal(user);

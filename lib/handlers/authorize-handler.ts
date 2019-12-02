@@ -14,7 +14,7 @@ import {
 import { Client, Model, User } from '../interfaces';
 import { Request } from '../request';
 import { Response } from '../response';
-import { CodeResponseType, TokenResponseType } from '../response-types';
+import { CodeResponseType, TokenResponseType, ResponseType } from '../response-types';
 import { hasOwnProperty } from '../utils/fn';
 import * as is from '../validator/is';
 
@@ -22,7 +22,7 @@ import * as is from '../validator/is';
  * Response types.
  */
 
-const responseTypes = {
+const responseTypes: {[type: string]: new (options: any) => ResponseType} = {
   code: CodeResponseType,
   token: TokenResponseType,
 };
@@ -91,7 +91,7 @@ export class AuthorizeHandler {
 
     let scope: string;
     let state: string | undefined;
-    let RequestedResponseType: any;
+    let RequestedResponseType: new (options: any) => ResponseType;
     let responseType: any;
     const uri = this.getRedirectUri(request, client);
     try {
@@ -102,6 +102,7 @@ export class AuthorizeHandler {
 
       const validScope = await this.validateScope(user, client, requestedScope);
       scope = validScope;
+      // tslint:disable-next-line: no-inferred-empty-object-type
       RequestedResponseType = this.getResponseType(request, client);
       responseType = new RequestedResponseType(this.options);
       const codeOrAccessToken = await responseType.handle(
@@ -311,7 +312,7 @@ export class AuthorizeHandler {
 
   buildSuccessRedirectUri(
     redirectUri: string,
-    responseType: CodeResponseType | TokenResponseType,
+    responseType: ResponseType,
   ) {
     const uri = url.parse(redirectUri);
 

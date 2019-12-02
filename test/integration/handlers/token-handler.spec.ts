@@ -11,6 +11,7 @@ import {
 } from '../../../lib/errors';
 import { PasswordGrantType } from '../../../lib/grant-types';
 import { TokenHandler } from '../../../lib/handlers';
+import { Client } from '../../../lib/interfaces';
 import { Request } from '../../../lib/request';
 import { Response } from '../../../lib/response';
 import { BearerTokenType } from '../../../lib/token-types';
@@ -195,7 +196,7 @@ describe('TokenHandler integration', () => {
       });
 
       try {
-        await handler.handle(undefined, undefined);
+        await handler.handle(undefined as unknown as Request, new Response());
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -224,7 +225,7 @@ describe('TokenHandler integration', () => {
       });
 
       try {
-        await handler.handle(request, undefined);
+        await handler.handle(request, undefined as unknown as Response);
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -1070,7 +1071,7 @@ describe('TokenHandler integration', () => {
       });
 
       try {
-        await handler.handleGrantType(request, undefined);
+        await handler.handleGrantType(request, {id: 'test', grants: []});
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -1097,7 +1098,7 @@ describe('TokenHandler integration', () => {
       });
 
       try {
-        await handler.handleGrantType(request, undefined);
+        await handler.handleGrantType(request, {id: 'test', grants: []});
         should.fail('should.fail', '');
       } catch (e) {
         e.should.be.an.instanceOf(InvalidRequestError);
@@ -1123,7 +1124,7 @@ describe('TokenHandler integration', () => {
       });
 
       try {
-        await handler.handleGrantType(request, undefined);
+        await handler.handleGrantType(request, {id: 'test', grants: []});
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -1135,7 +1136,7 @@ describe('TokenHandler integration', () => {
     });
 
     it('should throw an error if `grant_type` is unauthorized', async () => {
-      const client: any = { grants: ['client_credentials'] };
+      const client: Client = { id: 'test', grants: ['client_credentials'] };
       const model = {
         getClient() {},
         saveToken() {},
@@ -1195,15 +1196,16 @@ describe('TokenHandler integration', () => {
 
     describe('with grant_type `authorization_code`', () => {
       it('should return a token', () => {
-        const client: any = { id: 'foobar', grants: ['authorization_code'] };
+        const client: Client = { id: 'foobar', grants: ['authorization_code'] };
         const token = {};
         const model = {
           getAuthorizationCode() {
             return {
               authorizationCode: 12345,
-              client: { id: 'foobar' },
+              client,
               expiresAt: new Date(new Date().getTime() * 2),
               user: {},
+              scope: 'test',
             };
           },
           getClient() {},
@@ -1216,7 +1218,7 @@ describe('TokenHandler integration', () => {
           revokeAuthorizationCode() {
             return {
               authorizationCode: 12345,
-              client: { id: 'foobar' },
+              client,
               expiresAt: new Date(new Date().getTime() / 2),
               user: {},
             };
@@ -1245,7 +1247,7 @@ describe('TokenHandler integration', () => {
 
     describe('with grant_type `client_credentials`', () => {
       it('should return a token', () => {
-        const client: any = { grants: ['client_credentials'] };
+        const client: Client = { id: 'test', grants: ['client_credentials'] };
         const token = {};
         const model = {
           getClient() {},
@@ -1284,7 +1286,7 @@ describe('TokenHandler integration', () => {
 
     describe('with grant_type `password`', () => {
       it('should return a token', () => {
-        const client: any = { grants: ['password'] };
+        const client: Client = { id: 'test', grants: ['password'] };
         const token = {};
         const model = {
           getClient() {},
@@ -1327,14 +1329,14 @@ describe('TokenHandler integration', () => {
 
     describe('with grant_type `refresh_token`', () => {
       it('should return a token', () => {
-        const client: any = { grants: ['refresh_token'] };
-        const token = { accessToken: 'foo', client: {}, user: {} };
+        const client: Client = { id: 'test', grants: ['refresh_token'] };
+        const token = { accessToken: 'foo', client, user: {} };
         const model = {
           getClient() {},
           getRefreshToken() {
             return {
               accessToken: 'foo',
-              client: {},
+              client,
               refreshTokenExpiresAt: new Date(new Date().getTime() * 2),
               user: {},
             };
@@ -1345,7 +1347,7 @@ describe('TokenHandler integration', () => {
           revokeToken() {
             return {
               accessToken: 'foo',
-              client: {},
+              client,
               refreshTokenExpiresAt: new Date(new Date().getTime() / 2),
               user: {},
             };
@@ -1376,7 +1378,8 @@ describe('TokenHandler integration', () => {
 
     describe('with custom grant_type', () => {
       it('should return a token', () => {
-        const client: any = {
+        const client: Client = {
+          id: 'test',
           grants: ['urn:ietf:params:oauth:grant-type:saml2-bearer'],
         };
         const token = {};
@@ -1422,7 +1425,7 @@ describe('TokenHandler integration', () => {
 
   describe('getAccessTokenLifetime()', () => {
     it('should return the client access token lifetime', () => {
-      const client: any = { accessTokenLifetime: 60 };
+      const client: Client = { id: 'test', grants: [], accessTokenLifetime: 60 };
       const model = {
         getClient() {
           return client;
@@ -1439,7 +1442,7 @@ describe('TokenHandler integration', () => {
     });
 
     it('should return the default access token lifetime', () => {
-      const client: any = {};
+      const client: Client = { id: 'test', grants: [] };
       const model = {
         getClient() {
           return client;
@@ -1458,7 +1461,7 @@ describe('TokenHandler integration', () => {
 
   describe('getRefreshTokenLifetime()', () => {
     it('should return the client access token lifetime', () => {
-      const client: any = { refreshTokenLifetime: 60 };
+      const client: Client = { id: 'test', grants: [], refreshTokenLifetime: 60 };
       const model = {
         getClient() {
           return client;
@@ -1475,7 +1478,7 @@ describe('TokenHandler integration', () => {
     });
 
     it('should return the default access token lifetime', () => {
-      const client: any = {};
+      const client: Client = { id: 'test', grants: [] };
       const model = {
         getClient() {
           return client;
@@ -1531,10 +1534,9 @@ describe('TokenHandler integration', () => {
       });
       const tokenType = new BearerTokenType(
         'foo',
-        'bar' as any,
+        111,
         'biz',
-        undefined,
-        undefined,
+        'scope',
       );
       const response = new Response({ body: {}, headers: {} });
 
@@ -1542,9 +1544,10 @@ describe('TokenHandler integration', () => {
 
       response.body.should.eql({
         access_token: 'foo',
-        expires_in: 'bar',
+        expires_in: 111,
         refresh_token: 'biz',
         token_type: 'Bearer',
+        scope: 'scope',
       });
     });
 
@@ -1560,10 +1563,9 @@ describe('TokenHandler integration', () => {
       });
       const tokenType = new BearerTokenType(
         'foo',
-        'bar' as any,
+        111,
         'biz',
-        undefined,
-        undefined,
+        'scope',
       );
       const response = new Response({ body: {}, headers: {} });
 
@@ -1584,10 +1586,9 @@ describe('TokenHandler integration', () => {
       });
       const tokenType = new BearerTokenType(
         'foo',
-        'bar' as any,
+        111,
         'biz',
-        undefined,
-        undefined,
+        'scope',
       );
       const response = new Response({ body: {}, headers: {} });
 

@@ -121,7 +121,7 @@ describe('AuthenticateHandler integration', () => {
       });
 
       try {
-        await handler.handle(undefined, undefined);
+        await handler.handle(undefined as unknown as Request, new Response());
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -135,7 +135,7 @@ describe('AuthenticateHandler integration', () => {
     it('should set the `WWW-Authenticate` header if an unauthorized request error is thrown', () => {
       const model = {
         getAccessToken() {
-          throw new UnauthorizedRequestError(undefined, undefined);
+          throw new UnauthorizedRequestError('test');
         },
       };
       const handler = new AuthenticateHandler({ model });

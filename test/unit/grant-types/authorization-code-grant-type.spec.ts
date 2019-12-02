@@ -1,6 +1,7 @@
 import * as should from 'should';
 import * as sinon from 'sinon';
 import { AuthorizationCodeGrantType } from '../../../lib/grant-types';
+import { Client } from '../../../lib/interfaces';
 import { Request } from '../../../lib/request';
 
 /**
@@ -10,12 +11,14 @@ import { Request } from '../../../lib/request';
 describe('AuthorizationCodeGrantType', () => {
   describe('getAuthorizationCode()', () => {
     it('should call `model.getAuthorizationCode()`', async () => {
+      const client: Client = { id: 'test', grants: [] };
       const model = {
         getAuthorizationCode: sinon.stub().returns({
           authorizationCode: 12345,
-          client: {},
+          client,
           expiresAt: new Date(new Date().getTime() * 2),
           user: {},
+          scope: 'scope',
         }),
         revokeAuthorizationCode() {},
         saveToken() {},
@@ -51,7 +54,6 @@ describe('AuthorizationCodeGrantType', () => {
       });
       const authorizationCode: any = {};
       await handler.revokeAuthorizationCode(authorizationCode);
-
       model.revokeAuthorizationCode.callCount.should.equal(1);
       model.revokeAuthorizationCode.firstCall.args.should.have.length(1);
       model.revokeAuthorizationCode.firstCall.args[0].should.equal(
@@ -63,7 +65,7 @@ describe('AuthorizationCodeGrantType', () => {
 
   describe('saveToken()', () => {
     it('should call `model.saveToken()`', async () => {
-      const client: any = {};
+      const client: Client = { id: 'test', grants: [] };
       const user = {};
       const model = {
         getAuthorizationCode() {},
@@ -91,9 +93,11 @@ describe('AuthorizationCodeGrantType', () => {
         accessToken: 'foo',
         authorizationCode: 'foobar',
         accessTokenExpiresAt: 'biz',
+        client,
         refreshToken: 'bar',
         refreshTokenExpiresAt: 'baz',
         scope: 'foobiz',
+        user,
       });
       model.saveToken.firstCall.args[1].should.equal(client);
       model.saveToken.firstCall.args[2].should.equal(user);

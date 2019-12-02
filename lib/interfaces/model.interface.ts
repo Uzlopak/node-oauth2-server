@@ -24,6 +24,7 @@ export interface BaseModel {
    * Invoked to save an access token and optionally a refresh token, depending on the grant type.
    *
    */
+  // XXX: Why are client/user provided explicitly here?
   saveToken(token: Token, client: Client, user: User): Promise<Token>;
 }
 

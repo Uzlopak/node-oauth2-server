@@ -193,12 +193,12 @@ describe('CodeResponseType integration', () => {
         getClient: () => {},
         saveAuthorizationCode: () => {},
       };
-      const handler: any = new CodeResponseType({
+      const handler = new CodeResponseType({
         authorizationCodeLifetime: 120,
         model,
       });
 
-      handler.getAuthorizationCodeExpiresAt({}).should.be.an.instanceOf(Date);
+      handler.getAuthorizationCodeExpiresAt({id: 'test', grants: []}).should.be.an.instanceOf(Date);
     });
   });
 
@@ -297,6 +297,8 @@ describe('CodeResponseType integration', () => {
             expiresAt: 'bar',
             redirectUri: 'baz',
             scope: 'qux',
+            client: 'biz',
+            user: 'boz',
           });
           model.saveAuthorizationCode.firstCall.args[1].should.equal('biz');
           model.saveAuthorizationCode.firstCall.args[2].should.equal('boz');

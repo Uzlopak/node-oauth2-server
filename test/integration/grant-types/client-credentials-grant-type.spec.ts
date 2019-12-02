@@ -1,6 +1,7 @@
 import * as should from 'should';
 import { InvalidArgumentError, InvalidGrantError } from '../../../lib/errors';
 import { ClientCredentialsGrantType } from '../../../lib/grant-types';
+import { Client } from '../../../lib/interfaces';
 import { Request } from '../../../lib/request';
 
 /**
@@ -66,7 +67,7 @@ describe('ClientCredentialsGrantType integration', () => {
       });
 
       try {
-        await grantType.handle(undefined, undefined);
+        await grantType.handle(undefined as unknown as Request, {id: 'test', grants: []});
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -92,7 +93,7 @@ describe('ClientCredentialsGrantType integration', () => {
       });
 
       try {
-        await grantType.handle(request, undefined);
+        await grantType.handle(request, undefined as unknown as Client);
 
         should.fail('should.fail', '');
       } catch (e) {
