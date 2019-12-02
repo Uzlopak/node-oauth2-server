@@ -100,8 +100,7 @@ export class AuthorizeHandler {
       state = this.getState(request);
       const requestedScope = this.getScope(request);
 
-      const validScope = await this.validateScope(user, client, requestedScope);
-      scope = validScope;
+      scope = await this.validateScope(user, client, requestedScope);
       // tslint:disable-next-line: no-inferred-empty-object-type
       RequestedResponseType = this.getResponseType(request, client);
       responseType = new RequestedResponseType(this.options);
