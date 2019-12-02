@@ -53,18 +53,14 @@ describe('Server integration', () => {
         query: {},
       });
       const response = new Response({ body: {}, headers: {} });
-      try {
-        const stub = sinon
-          .stub(AuthenticateHandler.prototype, 'handle')
-          .returnsThis();
-        const token = await server.authenticate(request, response);
-        token.addAcceptedScopesHeader.should.be.true();
-        token.addAuthorizedScopesHeader.should.be.true();
-        token.allowBearerTokensInQueryString.should.be.false();
-        stub.restore();
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const stub = sinon
+        .stub(AuthenticateHandler.prototype, 'handle')
+        .returnsThis();
+      const token = await server.authenticate(request, response);
+      token.addAcceptedScopesHeader.should.be.true();
+      token.addAuthorizedScopesHeader.should.be.true();
+      token.allowBearerTokensInQueryString.should.be.false();
+      stub.restore();
     });
 
     it('should return a promise', () => {
@@ -142,7 +138,6 @@ describe('Server integration', () => {
         query: { state: 'foobar' },
       });
       const response = new Response({ body: {}, headers: {} });
-      // try {
       const stub = sinon
         .stub(AuthorizeHandler.prototype, 'handle')
         .returnsThis();
@@ -151,9 +146,6 @@ describe('Server integration', () => {
       options.allowEmptyState.should.be.false();
       options.authorizationCodeLifetime.should.be.equal(300);
       stub.restore();
-      // } catch (error) {
-      //   should.fail('should.fail', '');
-      // }
     });
 
     it('should return a promise', () => {
@@ -187,12 +179,8 @@ describe('Server integration', () => {
       });
 
       const response = new Response({ body: {}, headers: {} });
-      try {
-        const handler = server.authorize(request, response);
-        handler.should.be.an.instanceOf(Promise);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const handler = server.authorize(request, response);
+      handler.should.be.an.instanceOf(Promise);
     });
 
     /*   it('should support callbacks', next => {
@@ -266,14 +254,10 @@ describe('Server integration', () => {
       });
       const response = new Response({ body: {}, headers: {} });
       const stub = sinon.stub(TokenHandler.prototype, 'handle').returnsThis();
-      // try {
       const token = await server.token(request, response);
       token.accessTokenLifetime.should.equal(3600);
       token.refreshTokenLifetime.should.equal(1209600);
       stub.restore();
-      // } catch (error) {
-      //   should.fail('should.fail', '');
-      // }
     });
 
     it('should return a promise', () => {
@@ -305,13 +289,9 @@ describe('Server integration', () => {
         query: {},
       });
       const response = new Response({ body: {}, headers: {} });
-      // try {
       const handler = server.token(request, response);
 
       handler.should.be.an.instanceOf(Promise);
-      // } catch (error) {
-      // should.fail('should.fail', '');
-      // }
     });
 
     /* it('should support callbacks', next => {

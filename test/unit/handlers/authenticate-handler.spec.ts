@@ -95,9 +95,6 @@ describe('AuthenticateHandler', () => {
           model.getAccessToken.firstCall.args.should.have.length(1);
           model.getAccessToken.firstCall.args[0].should.equal('foo');
           model.getAccessToken.firstCall.thisValue.should.equal(model);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
@@ -126,14 +123,10 @@ describe('AuthenticateHandler', () => {
         getAccessToken() {},
       };
       const handler = new AuthenticateHandler({ model });
-      try {
-        handler.validateAccessToken({
-          user: {},
-          accessTokenExpiresAt: new Date(new Date().getTime() + 10000),
-        } as any);
-      } catch (err) {
-        should.fail('should.fail', '');
-      }
+      handler.validateAccessToken({
+        user: {},
+        accessTokenExpiresAt: new Date(new Date().getTime() + 10000),
+      } as any);
     });
   });
 
@@ -157,9 +150,6 @@ describe('AuthenticateHandler', () => {
           model.verifyScope.firstCall.args.should.have.length(2);
           model.verifyScope.firstCall.args[0].should.equal('foo', 'bar');
           model.verifyScope.firstCall.thisValue.should.equal(model);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });

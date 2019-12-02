@@ -242,9 +242,6 @@ describe('AuthenticateHandler integration', () => {
         .handle(request, response)
         .then(data => {
           data.should.equal(accessToken);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
@@ -484,9 +481,6 @@ describe('AuthenticateHandler integration', () => {
         .getAccessToken('foo')
         .then(data => {
           data.should.equal(accessToken);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 

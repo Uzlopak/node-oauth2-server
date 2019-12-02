@@ -64,12 +64,8 @@ describe('AbstractGrantType integration', () => {
         model: {},
         refreshTokenLifetime: 456,
       });
-      try {
-        const data: any = await handler.generateAccessToken();
-        data.should.be.a.sha1();
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data: any = await handler.generateAccessToken();
+      data.should.be.a.sha1();
     });
 
     it('should support promises', () => {
@@ -110,12 +106,8 @@ describe('AbstractGrantType integration', () => {
         model: {},
         refreshTokenLifetime: 456,
       });
-      try {
-        const data: any = await handler.generateRefreshToken();
-        data.should.be.a.sha1();
-      } catch (error) {
-        should.fail('should.fail fail', error.message);
-      }
+      const data: any = await handler.generateRefreshToken();
+      data.should.be.a.sha1();
     });
 
     it('should support promises', () => {

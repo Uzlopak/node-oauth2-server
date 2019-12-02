@@ -125,9 +125,6 @@ describe('PasswordGrantType integration', () => {
         .handle(request, client)
         .then(data => {
           data.should.equal(token);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -354,12 +351,8 @@ describe('PasswordGrantType integration', () => {
         method: 'ANY',
         query: {},
       });
-      try {
-        const data = await grantType.getUser(request);
-        data.should.equal(user);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await grantType.getUser(request);
+      data.should.equal(user);
     });
 
     it('should support promises', () => {
@@ -445,12 +438,8 @@ describe('PasswordGrantType integration', () => {
         accessTokenLifetime: 123,
         model,
       });
-      try {
-        const data = await grantType.saveToken({}, {} as any, token);
-        data.should.equal(token);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await grantType.saveToken({}, {} as any, token);
+      data.should.equal(token);
     });
 
     it('should support promises', () => {

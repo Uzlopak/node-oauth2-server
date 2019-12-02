@@ -30,18 +30,12 @@ describe('AuthorizationCodeGrantType', () => {
         method: 'ANY',
         query: {},
       });
-      const client: any = {};
-      try {
-        await handler.getAuthorizationCode(request, client);
-
-        model.getAuthorizationCode.callCount.should.equal(1);
-        model.getAuthorizationCode.firstCall.args.should.have.length(1);
-        model.getAuthorizationCode.firstCall.args[0].should.equal(12345);
-        model.getAuthorizationCode.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
-    });
+      await handler.getAuthorizationCode(request, client);
+      model.getAuthorizationCode.callCount.should.equal(1);
+      model.getAuthorizationCode.firstCall.args.should.have.length(1);
+      model.getAuthorizationCode.firstCall.args[0].should.equal(12345);
+      model.getAuthorizationCode.firstCall.thisValue.should.equal(model);
+  });
   });
 
   describe('revokeAuthorizationCode()', () => {
@@ -56,18 +50,14 @@ describe('AuthorizationCodeGrantType', () => {
         model,
       });
       const authorizationCode: any = {};
-      try {
-        await handler.revokeAuthorizationCode(authorizationCode);
+      await handler.revokeAuthorizationCode(authorizationCode);
 
-        model.revokeAuthorizationCode.callCount.should.equal(1);
-        model.revokeAuthorizationCode.firstCall.args.should.have.length(1);
-        model.revokeAuthorizationCode.firstCall.args[0].should.equal(
-          authorizationCode,
-        );
-        model.revokeAuthorizationCode.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      model.revokeAuthorizationCode.callCount.should.equal(1);
+      model.revokeAuthorizationCode.firstCall.args.should.have.length(1);
+      model.revokeAuthorizationCode.firstCall.args[0].should.equal(
+        authorizationCode,
+      );
+      model.revokeAuthorizationCode.firstCall.thisValue.should.equal(model);
     });
   });
 
@@ -94,24 +84,20 @@ describe('AuthorizationCodeGrantType', () => {
         .returns(Promise.resolve('bar'));
       sinon.stub(handler, 'getAccessTokenExpiresAt').returns('biz' as any);
       sinon.stub(handler, 'getRefreshTokenExpiresAt').returns('baz' as any);
-      try {
-        await handler.saveToken(user, client, 'foobar', 'foobiz');
-        model.saveToken.callCount.should.equal(1);
-        model.saveToken.firstCall.args.should.have.length(3);
-        model.saveToken.firstCall.args[0].should.eql({
-          accessToken: 'foo',
-          authorizationCode: 'foobar',
-          accessTokenExpiresAt: 'biz',
-          refreshToken: 'bar',
-          refreshTokenExpiresAt: 'baz',
-          scope: 'foobiz',
-        });
-        model.saveToken.firstCall.args[1].should.equal(client);
-        model.saveToken.firstCall.args[2].should.equal(user);
-        model.saveToken.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.saveToken(user, client, 'foobar', 'foobiz');
+      model.saveToken.callCount.should.equal(1);
+      model.saveToken.firstCall.args.should.have.length(3);
+      model.saveToken.firstCall.args[0].should.eql({
+        accessToken: 'foo',
+        authorizationCode: 'foobar',
+        accessTokenExpiresAt: 'biz',
+        refreshToken: 'bar',
+        refreshTokenExpiresAt: 'baz',
+        scope: 'foobiz',
+      });
+      model.saveToken.firstCall.args[1].should.equal(client);
+      model.saveToken.firstCall.args[2].should.equal(user);
+      model.saveToken.firstCall.thisValue.should.equal(model);
     });
   });
 });

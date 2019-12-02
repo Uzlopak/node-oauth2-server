@@ -18,15 +18,11 @@ describe('ClientCredentialsGrantType', () => {
         model,
       });
       const client: any = {};
-      try {
-        await handler.getUserFromClient(client);
-        model.getUserFromClient.callCount.should.equal(1);
-        model.getUserFromClient.firstCall.args.should.have.length(1);
-        model.getUserFromClient.firstCall.args[0].should.equal(client);
-        model.getUserFromClient.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.getUserFromClient(client);
+      model.getUserFromClient.callCount.should.equal(1);
+      model.getUserFromClient.firstCall.args.should.have.length(1);
+      model.getUserFromClient.firstCall.args[0].should.equal(client);
+      model.getUserFromClient.firstCall.thisValue.should.equal(model);
     });
   });
 
@@ -46,21 +42,17 @@ describe('ClientCredentialsGrantType', () => {
       sinon.stub(handler, 'validateScope').returns('foobar' as any);
       sinon.stub(handler, 'generateAccessToken').returns('foo' as any);
       sinon.stub(handler, 'getAccessTokenExpiresAt').returns('biz' as any);
-      try {
-        await handler.saveToken(user, client, 'foobar');
-        model.saveToken.callCount.should.equal(1);
-        model.saveToken.firstCall.args.should.have.length(3);
-        model.saveToken.firstCall.args[0].should.eql({
-          accessToken: 'foo',
-          accessTokenExpiresAt: 'biz',
-          scope: 'foobar',
-        });
-        model.saveToken.firstCall.args[1].should.equal(client);
-        model.saveToken.firstCall.args[2].should.equal(user);
-        model.saveToken.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.saveToken(user, client, 'foobar');
+      model.saveToken.callCount.should.equal(1);
+      model.saveToken.firstCall.args.should.have.length(3);
+      model.saveToken.firstCall.args[0].should.eql({
+        accessToken: 'foo',
+        accessTokenExpiresAt: 'biz',
+        scope: 'foobar',
+      });
+      model.saveToken.firstCall.args[1].should.equal(client);
+      model.saveToken.firstCall.args[2].should.equal(user);
+      model.saveToken.firstCall.thisValue.should.equal(model);
     });
   });
 });

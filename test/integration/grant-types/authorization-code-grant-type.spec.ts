@@ -176,6 +176,7 @@ describe('AuthorizationCodeGrantType integration', () => {
             client: { id: 'foobar' },
             expiresAt: new Date(new Date().getTime() * 2),
             user: {},
+            scope: 'test',
           };
         },
         revokeAuthorizationCode: () => {
@@ -198,12 +199,8 @@ describe('AuthorizationCodeGrantType integration', () => {
         method: 'ANY',
         query: {},
       });
-      try {
-        const data = await grantType.handle(request, client);
-        data.should.equal(token);
-      } catch (e) {
-        should.fail('should.fail', '');
-      }
+      const data = await grantType.handle(request, client);
+      data.should.equal(token);
     });
 
     it('should support promises', () => {
@@ -642,9 +639,6 @@ describe('AuthorizationCodeGrantType integration', () => {
         .getAuthorizationCode(request, client)
         .then(data => {
           data.should.equal(authorizationCode);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -837,12 +831,8 @@ describe('AuthorizationCodeGrantType integration', () => {
         accessTokenLifetime: 123,
         model,
       });
-      try {
-        const data = await grantType.revokeAuthorizationCode(authorizationCode);
-        data.should.equal(authorizationCode);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await grantType.revokeAuthorizationCode(authorizationCode);
+      data.should.equal(authorizationCode);
     });
 
     it('should throw an error when the auth code is invalid', () => {
@@ -967,12 +957,8 @@ describe('AuthorizationCodeGrantType integration', () => {
         accessTokenLifetime: 123,
         model,
       });
-      try {
-        const data = await grantType.saveToken({}, {} as any, token, '');
-        data.should.equal(token);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await grantType.saveToken({}, {} as any, token, '');
+      data.should.equal(token);
     });
 
     it('should support promises', () => {

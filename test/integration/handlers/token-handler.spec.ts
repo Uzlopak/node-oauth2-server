@@ -459,12 +459,8 @@ describe('TokenHandler integration', () => {
         query: {},
       });
       const response = new Response({ body: {}, headers: {} });
-      try {
-        const data = await handler.handle(request, response);
-        data.should.eql(token);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await handler.handle(request, response);
+      data.should.eql(token);
     });
 
     it('should not return custom attributes in a bearer token if the allowExtendedTokenAttributes is not set', () => {
@@ -521,9 +517,6 @@ describe('TokenHandler integration', () => {
           should.exist(response.body.token_type);
           should.exist(response.body.scope);
           should.not.exist(response.body.foo);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -781,12 +774,8 @@ describe('TokenHandler integration', () => {
         method: 'ANY',
         query: {},
       });
-      try {
-        const data = await handler.getClient(request, undefined);
-        data.should.equal(client);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await handler.getClient(request, undefined);
+      data.should.equal(client);
     });
 
     describe('with `password` grant type and `requireClientAuthentication` is false', () => {
@@ -818,9 +807,6 @@ describe('TokenHandler integration', () => {
           .getClient(request, undefined)
           .then(data => {
             data.should.equal(client);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });
@@ -859,9 +845,6 @@ describe('TokenHandler integration', () => {
           .getClient(request, undefined)
           .then(data => {
             data.should.equal(client);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });
@@ -1257,9 +1240,6 @@ describe('TokenHandler integration', () => {
         return handler.handleGrantType(request, client).then(data => {
           data.should.equal(token);
         });
-        // .catch(() => {
-        //   should.fail('should.fail', '');
-        // });
       });
     });
 
@@ -1298,9 +1278,6 @@ describe('TokenHandler integration', () => {
           .handleGrantType(request, client)
           .then(data => {
             data.should.equal(token);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });
@@ -1344,9 +1321,6 @@ describe('TokenHandler integration', () => {
           .handleGrantType(request, client)
           .then(data => {
             data.should.equal(token);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });
@@ -1396,9 +1370,6 @@ describe('TokenHandler integration', () => {
           .handleGrantType(request, client)
           .then(data => {
             data.should.equal(token);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });
@@ -1444,9 +1415,6 @@ describe('TokenHandler integration', () => {
           .handleGrantType(request, client)
           .then(data => {
             data.should.equal(token);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });

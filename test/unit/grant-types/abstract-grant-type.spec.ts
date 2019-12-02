@@ -18,13 +18,9 @@ describe('AbstractGrantType', () => {
         accessTokenLifetime: 120,
         model,
       });
-      try {
-        await handler.generateAccessToken();
-        model.generateAccessToken.callCount.should.equal(1);
-        model.generateAccessToken.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.generateAccessToken();
+      model.generateAccessToken.callCount.should.equal(1);
+      model.generateAccessToken.firstCall.thisValue.should.equal(model);
     });
   });
 
@@ -41,13 +37,9 @@ describe('AbstractGrantType', () => {
         accessTokenLifetime: 120,
         model,
       });
-      try {
-        await handler.generateRefreshToken();
-        model.generateRefreshToken.callCount.should.equal(1);
-        model.generateRefreshToken.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.generateRefreshToken();
+      model.generateRefreshToken.callCount.should.equal(1);
+      model.generateRefreshToken.firstCall.thisValue.should.equal(model);
     });
   });
 });

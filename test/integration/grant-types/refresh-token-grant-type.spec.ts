@@ -157,9 +157,6 @@ describe('RefreshTokenGrantType integration', () => {
         .handle(request, client)
         .then(data => {
           data.should.equal(token);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -582,9 +579,6 @@ describe('RefreshTokenGrantType integration', () => {
         .getRefreshToken(request, client)
         .then(data => {
           data.should.equal(token);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -713,9 +707,6 @@ describe('RefreshTokenGrantType integration', () => {
         .revokeToken(token)
         .then(data => {
           data.should.equal(token);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -800,12 +791,8 @@ describe('RefreshTokenGrantType integration', () => {
         accessTokenLifetime: 123,
         model,
       });
-      try {
-        const data = await grantType.saveToken({}, {} as any, token);
-        data.should.equal(token);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      const data = await grantType.saveToken({}, {} as any, token);
+      data.should.equal(token);
     });
 
     it('should support promises', () => {

@@ -144,9 +144,6 @@ describe('CodeResponseType integration', () => {
         .generateAuthorizationCode(undefined, undefined, undefined)
         .then((data: any) => {
           data.should.be.a.sha1();
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -224,9 +221,6 @@ describe('CodeResponseType integration', () => {
         .saveAuthorizationCode('foo', 'bar', 'biz', 'baz')
         .then(data => {
           data.should.equal(authorizationCode);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -306,9 +300,6 @@ describe('CodeResponseType integration', () => {
           });
           model.saveAuthorizationCode.firstCall.args[1].should.equal('biz');
           model.saveAuthorizationCode.firstCall.args[2].should.equal('boz');
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
@@ -330,9 +321,6 @@ describe('CodeResponseType integration', () => {
         .generateAuthorizationCode(undefined, undefined, undefined)
         .then(() => {
           model.generateAuthorizationCode.callCount.should.equal(1);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });

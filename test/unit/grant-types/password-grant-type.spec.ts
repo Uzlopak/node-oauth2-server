@@ -24,16 +24,12 @@ describe('PasswordGrantType', () => {
         method: 'ANY',
         query: {},
       });
-      try {
-        await handler.getUser(request);
-        model.getUser.callCount.should.equal(1);
-        model.getUser.firstCall.args.should.have.length(2);
-        model.getUser.firstCall.args[0].should.equal('foo');
-        model.getUser.firstCall.args[1].should.equal('bar');
-        model.getUser.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.getUser(request);
+      model.getUser.callCount.should.equal(1);
+      model.getUser.firstCall.args.should.have.length(2);
+      model.getUser.firstCall.args[0].should.equal('foo');
+      model.getUser.firstCall.args[1].should.equal('bar');
+      model.getUser.firstCall.thisValue.should.equal(model);
     });
   });
 
@@ -55,24 +51,19 @@ describe('PasswordGrantType', () => {
       sinon.stub(handler, 'generateRefreshToken').returns('bar' as any);
       sinon.stub(handler, 'getAccessTokenExpiresAt').returns('biz' as any);
       sinon.stub(handler, 'getRefreshTokenExpiresAt').returns('baz' as any);
-      try {
-        await handler.saveToken(user, client, 'foobar');
-
-        model.saveToken.callCount.should.equal(1);
-        model.saveToken.firstCall.args.should.have.length(3);
-        model.saveToken.firstCall.args[0].should.eql({
-          accessToken: 'foo',
-          accessTokenExpiresAt: 'biz',
-          refreshToken: 'bar',
-          refreshTokenExpiresAt: 'baz',
-          scope: 'foobar',
-        });
-        model.saveToken.firstCall.args[1].should.equal(client);
-        model.saveToken.firstCall.args[2].should.equal(user);
-        model.saveToken.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
-    });
+      await handler.saveToken(user, client, 'foobar');
+      model.saveToken.callCount.should.equal(1);
+      model.saveToken.firstCall.args.should.have.length(3);
+      model.saveToken.firstCall.args[0].should.eql({
+        accessToken: 'foo',
+        accessTokenExpiresAt: 'biz',
+        refreshToken: 'bar',
+        refreshTokenExpiresAt: 'baz',
+        scope: 'foobar',
+      });
+      model.saveToken.firstCall.args[1].should.equal(client);
+      model.saveToken.firstCall.args[2].should.equal(user);
+      model.saveToken.firstCall.thisValue.should.equal(model);
+  });
   });
 });

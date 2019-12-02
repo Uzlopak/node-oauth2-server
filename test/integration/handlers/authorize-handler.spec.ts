@@ -366,9 +366,6 @@ describe('AuthorizeHandler integration', () => {
           response
             .get('location')
             .should.equal('http://example.com/cb?code=12345&state=foobar');
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -619,9 +616,6 @@ describe('AuthorizeHandler integration', () => {
             authorizationCode: 12345,
             client,
           });
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
@@ -637,16 +631,12 @@ describe('AuthorizeHandler integration', () => {
   //       authorizationCodeLifetime: 120,
   //       model,
   //     });
-  //     try {
-  //       const data: any = await handler.generateAuthorizationCode(
-  //         undefined,
-  //         undefined,
-  //         undefined,
-  //       );
-  //       data.should.be.a.sha1();
-  //     } catch (error) {
-  //       should.fail('should.fail', '');
-  //     }
+  //     const data: any = await handler.generateAuthorizationCode(
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //     );
+  //     data.should.be.a.sha1();
   //   });
 
   //   it('should support promises', async () => {
@@ -662,13 +652,9 @@ describe('AuthorizeHandler integration', () => {
   //       authorizationCodeLifetime: 120,
   //       model,
   //     });
-  //     try {
-  //       await handler
-  //         .generateAuthorizationCode(undefined, undefined, undefined)
-  //         .should.be.an.instanceOf(Promise);
-  //     } catch (error) {
-  //       should.fail('should.fail', '');
-  //     }
+  //     await handler
+  //       .generateAuthorizationCode(undefined, undefined, undefined)
+  //       .should.be.an.instanceOf(Promise);
   //   });
 
   //   /*  it('should support non-promises', () => {
@@ -979,11 +965,7 @@ describe('AuthorizeHandler integration', () => {
         method: 'ANY',
         query: {},
       });
-      try {
-        handler.getClient(request).should.be.an.instanceOf(Promise);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      handler.getClient(request).should.be.an.instanceOf(Promise);
     });
 
     /*     it('should support non-promises', async () => {
@@ -1065,9 +1047,6 @@ describe('AuthorizeHandler integration', () => {
           .getClient(request)
           .then(data => {
             data.should.equal(client);
-          })
-          .catch(() => {
-            should.fail('should.fail', '');
           });
       });
     });
@@ -1308,9 +1287,6 @@ describe('AuthorizeHandler integration', () => {
         .getUser(request, response)
         .then(data => {
           data.should.equal(user);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
@@ -1341,8 +1317,7 @@ describe('AuthorizeHandler integration', () => {
   //       )
   //       .then(data => {
   //         data.should.equal(authorizationCode);
-  //       })
-  //       .catch(() => should.fail('should.fail', ''));
+  //       });
   //   });
 
   //   it('should support promises when calling `model.saveAuthorizationCode()`', () => {

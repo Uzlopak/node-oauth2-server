@@ -21,13 +21,9 @@ describe('AuthorizeHandler', () => {
   //       authorizationCodeLifetime: 120,
   //       model,
   //     });
-  //     try {
-  //       await handler.generateAuthorizationCode({}, {}, {});
-  //       model.generateAuthorizationCode.callCount.should.equal(1);
-  //       model.generateAuthorizationCode.firstCall.thisValue.should.equal(model);
-  //     } catch (error) {
-  //       should.fail('should.fail', '');
-  //     }
+  //     await handler.generateAuthorizationCode({}, {}, {});
+  //     model.generateAuthorizationCode.callCount.should.equal(1);
+  //     model.generateAuthorizationCode.firstCall.thisValue.should.equal(model);
   //   });
   // });
 
@@ -53,15 +49,11 @@ describe('AuthorizeHandler', () => {
         method: 'ANY',
         query: {},
       });
-      try {
-        await handler.getClient(request);
-        model.getClient.callCount.should.equal(1);
-        model.getClient.firstCall.args.should.have.length(1);
-        model.getClient.firstCall.args[0].should.equal(12345);
-        model.getClient.firstCall.thisValue.should.equal(model);
-      } catch (error) {
-        should.fail('should.fail', '');
-      }
+      await handler.getClient(request);
+      model.getClient.callCount.should.equal(1);
+      model.getClient.firstCall.args.should.have.length(1);
+      model.getClient.firstCall.args[0].should.equal(12345);
+      model.getClient.firstCall.thisValue.should.equal(model);
     });
   });
 
@@ -94,9 +86,6 @@ describe('AuthorizeHandler', () => {
           authenticateHandler.handle.firstCall.args.should.have.length(2);
           authenticateHandler.handle.firstCall.args[0].should.equal(request);
           authenticateHandler.handle.firstCall.args[1].should.equal(response);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
@@ -133,8 +122,7 @@ describe('AuthorizeHandler', () => {
   //       model.saveAuthorizationCode.firstCall.args[1].should.equal('biz');
   //       model.saveAuthorizationCode.firstCall.args[2].should.equal('boz');
   //       model.saveAuthorizationCode.firstCall.thisValue.should.equal(model);
-  //     })
-  //     .catch(() => should.fail('should.fail', ''));
+  //     });
   // });
   // });
 });
