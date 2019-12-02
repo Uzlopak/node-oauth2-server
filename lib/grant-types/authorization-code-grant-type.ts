@@ -12,9 +12,6 @@ import * as is from '../validator/is';
 export class AuthorizationCodeGrantType extends AbstractGrantType {
   constructor(options: any = {}) {
     super(options);
-    if (!options.model) {
-      throw new InvalidArgumentError('Missing parameter: `model`');
-    }
 
     if (!options.model.getAuthorizationCode) {
       throw new InvalidArgumentError(
