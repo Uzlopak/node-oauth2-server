@@ -21,6 +21,7 @@ export class TokenModel implements Token {
   scope: string;
   client: Client;
   user: User;
+  // FIXME: This one is odd, is the type really '{}'? Usage points towards {[key: string]: any}
   customAttributes: {};
   accessTokenLifetime: number;
   constructor(data: any = {}, options: any = {}) {
