@@ -9,9 +9,7 @@ export class OAuthError extends Error {
     let message =
       messageOrError instanceof Error ? messageOrError.message : messageOrError;
     const error = messageOrError instanceof Error ? messageOrError : undefined;
-    let props: any = {};
-    props = properties;
-    props.code = props.code || 500; // default code 500
+    const props = { code: 500, ...properties};
 
     if (error) {
       props.inner = error;
