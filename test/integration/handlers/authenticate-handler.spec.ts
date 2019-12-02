@@ -290,6 +290,29 @@ describe('AuthenticateHandler integration', () => {
         e.message.should.equal('Unauthorized request: no authentication given');
       }
     });
+
+    it('should throw an error if the query contains a token without allowBearerTokensInQueryString', () => {
+      const handler = new AuthenticateHandler({
+        model: { getAccessToken() {} },
+      });
+      const request = new Request({
+        body: {},
+        headers: {},
+        method: 'ANY',
+        query: { access_token: 'test' },
+      });
+
+      try {
+        handler.getTokenFromRequestQuery(request);
+
+        should.fail('should.fail', '');
+      } catch (e) {
+        e.should.be.an.instanceOf(InvalidRequestError);
+        e.message.should.equal(
+          'Invalid request: do not send bearer tokens in query URLs',
+        );
+      }
+    });
   });
 
   describe('getTokenFromRequestHeader()', () => {
@@ -338,13 +361,31 @@ describe('AuthenticateHandler integration', () => {
   });
 
   describe('getTokenFromRequestQuery()', () => {
-    it('should throw an error if the query contains a token', () => {
+    it('should throw an error if `allowBearerTokensInQueryString` is unset', () => {
       const handler = new AuthenticateHandler({
         model: { getAccessToken() {} },
       });
 
       try {
-        handler.getTokenFromRequestQuery(undefined);
+        handler.getTokenFromRequestQuery(new Request({ method: 'GET', headers: {}, query: {}, body: {}}));
+
+        should.fail('should.fail', '');
+      } catch (e) {
+        e.should.be.an.instanceOf(InvalidRequestError);
+        e.message.should.equal(
+          'Invalid request: do not send bearer tokens in query URLs',
+        );
+      }
+    });
+
+    it('should throw an error if `allowBearerTokensInQueryString` is false', () => {
+      const handler = new AuthenticateHandler({
+        allowBearerTokensInQueryString: false,
+        model: { getAccessToken() {} },
+      });
+
+      try {
+        handler.getTokenFromRequestQuery(new Request({ method: 'GET', headers: {}, query: {}, body: {}}));
 
         should.fail('should.fail', '');
       } catch (e) {
@@ -360,8 +401,8 @@ describe('AuthenticateHandler integration', () => {
         allowBearerTokensInQueryString: true,
         model: { getAccessToken() {} },
       });
-      const req = { query: { access_token: 'foo' } };
-      handler.getTokenFromRequestQuery(req as unknown as Request).should.equal('foo');
+      const req = new Request({ method: 'GET', headers: {}, query: { access_token: 'foo' }, body: {}});
+      handler.getTokenFromRequestQuery(req).should.equal('foo');
     });
   });
 
