@@ -32,7 +32,7 @@ export class AbstractGrantType {
    * Generate access token.
    */
 
-  async generateAccessToken(client?: Client, user?: User, scope?: string) {
+  async generateAccessToken(client: Client, user: User, scope: string) {
     if (this.model.generateAccessToken) {
       const token = await this.model.generateAccessToken(client, user, scope);
 
@@ -46,7 +46,7 @@ export class AbstractGrantType {
    * Generate refresh token.
    */
 
-  async generateRefreshToken(client?: Client, user?: User, scope?: string) {
+  async generateRefreshToken(client: Client, user: User, scope: string) {
     if (this.model.generateRefreshToken) {
       const token = await this.model.generateRefreshToken(client, user, scope);
 

@@ -141,7 +141,7 @@ describe('CodeResponseType integration', () => {
       });
 
       return handler
-        .generateAuthorizationCode(undefined, undefined, undefined)
+        .generateAuthorizationCode({id: 'test', grants: []}, {}, '')
         .then(data => {
           data.should.be.a.sha1();
         });
@@ -162,7 +162,7 @@ describe('CodeResponseType integration', () => {
       });
 
       handler
-        .generateAuthorizationCode(undefined, undefined, undefined)
+        .generateAuthorizationCode({id: 'test', grants: []}, {}, '')
         .should.be.an.instanceOf(Promise);
     });
 
@@ -181,7 +181,7 @@ describe('CodeResponseType integration', () => {
     //   });
 
     //   handler
-    //     .generateAuthorizationCode(undefined, undefined, undefined)
+    //     .generateAuthorizationCode({id: 'test', grants: []}, {}, '')
     //     .should.be.an.instanceOf(Promise);
     // });
   });
@@ -318,7 +318,7 @@ describe('CodeResponseType integration', () => {
       });
 
       return handler
-        .generateAuthorizationCode(undefined, undefined, undefined)
+        .generateAuthorizationCode({id: 'test', grants: []}, {}, '')
         .then(() => {
           model.generateAuthorizationCode.callCount.should.equal(1);
         });

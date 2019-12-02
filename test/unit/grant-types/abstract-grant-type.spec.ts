@@ -18,7 +18,7 @@ describe('AbstractGrantType', () => {
         accessTokenLifetime: 120,
         model,
       });
-      await handler.generateAccessToken();
+      await handler.generateAccessToken({id: 'test', grants: []}, {}, '');
       model.generateAccessToken.callCount.should.equal(1);
       model.generateAccessToken.firstCall.thisValue.should.equal(model);
     });
@@ -37,7 +37,7 @@ describe('AbstractGrantType', () => {
         accessTokenLifetime: 120,
         model,
       });
-      await handler.generateRefreshToken();
+      await handler.generateRefreshToken({id: 'test', grants: []}, {}, '');
       model.generateRefreshToken.callCount.should.equal(1);
       model.generateRefreshToken.firstCall.thisValue.should.equal(model);
     });

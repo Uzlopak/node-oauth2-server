@@ -64,7 +64,7 @@ describe('AbstractGrantType integration', () => {
         model: {},
         refreshTokenLifetime: 456,
       });
-      const data = await handler.generateAccessToken();
+      const data = await handler.generateAccessToken({id: 'test', grants: []}, {}, '');
       data.should.be.a.sha1();
     });
 
@@ -80,7 +80,7 @@ describe('AbstractGrantType integration', () => {
         refreshTokenLifetime: 456,
       });
 
-      handler.generateAccessToken().should.be.an.instanceOf(Promise);
+      handler.generateAccessToken({id: 'test', grants: []}, {}, '').should.be.an.instanceOf(Promise);
     });
 
     it('should support non-promises', () => {
@@ -95,7 +95,7 @@ describe('AbstractGrantType integration', () => {
         refreshTokenLifetime: 456,
       });
 
-      handler.generateAccessToken().should.be.an.instanceOf(Promise);
+      handler.generateAccessToken({id: 'test', grants: []}, {}, '').should.be.an.instanceOf(Promise);
     });
   });
 
@@ -106,7 +106,7 @@ describe('AbstractGrantType integration', () => {
         model: {},
         refreshTokenLifetime: 456,
       });
-      const data = await handler.generateRefreshToken();
+      const data = await handler.generateRefreshToken({id: 'test', grants: []}, {}, '');
       data.should.be.a.sha1();
     });
 
@@ -122,7 +122,7 @@ describe('AbstractGrantType integration', () => {
         refreshTokenLifetime: 456,
       });
 
-      handler.generateRefreshToken().should.be.an.instanceOf(Promise);
+      handler.generateRefreshToken({id: 'test', grants: []}, {}, '').should.be.an.instanceOf(Promise);
     });
 
     it('should support non-promises', () => {
@@ -137,7 +137,7 @@ describe('AbstractGrantType integration', () => {
         refreshTokenLifetime: 456,
       });
 
-      handler.generateRefreshToken().should.be.an.instanceOf(Promise);
+      handler.generateRefreshToken({id: 'test', grants: []}, {}, '').should.be.an.instanceOf(Promise);
     });
   });
 
