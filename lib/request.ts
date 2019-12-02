@@ -18,7 +18,7 @@ export class Request {
       method: string;
       query: Query;
       [key: string]: any;
-    } = {} as any,
+    },
   ) {
     if (!options.headers) {
       throw new InvalidArgumentError('Missing parameter: `headers`');
