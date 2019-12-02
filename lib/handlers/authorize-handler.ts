@@ -271,7 +271,7 @@ export class AuthorizeHandler {
     return (
       request.body.redirect_uri ||
       request.query.redirect_uri ||
-      client.redirectUris[0]
+      Array.isArray(client.redirectUris) && client.redirectUris.length > 0 && client.redirectUris[0]
     );
   }
 
