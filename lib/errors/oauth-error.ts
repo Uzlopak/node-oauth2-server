@@ -17,7 +17,7 @@ export class OAuthError extends Error {
       props.inner = error;
     }
     if (!message) {
-      message = statuses[props.code];
+      message = statuses[props.code] || '';
     }
     this.code = this.status = this.statusCode = props.code;
     this.message = message;
