@@ -79,10 +79,10 @@ describe('Request integration', () => {
         body: {},
         headers: {},
         method: 'ANY',
-        query: 'baz',
+        query: {foo: 'baz'},
       });
 
-      request.query.should.equal('baz');
+      request.query.foo.should.equal('baz');
     });
   });
 

@@ -2,17 +2,21 @@ import * as typeis from 'type-is';
 import { InvalidArgumentError } from './errors';
 import { hasOwnProperty } from './utils/fn';
 
+interface Query {
+  [key: string]: any;
+}
+
 export class Request {
   body: any;
   headers: any;
   method: string;
-  query: any;
+  query: Query;
   constructor(
     options: {
       body: any;
       headers: any;
       method: string;
-      query: any;
+      query: Query;
       [key: string]: any;
     } = {} as any,
   ) {

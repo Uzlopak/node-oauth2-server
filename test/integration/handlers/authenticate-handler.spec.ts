@@ -364,7 +364,7 @@ describe('AuthenticateHandler integration', () => {
         model: { getAccessToken() {} },
       });
       const req = { query: { access_token: 'foo' } };
-      handler.getTokenFromRequestQuery(req as Request).should.equal('foo');
+      handler.getTokenFromRequestQuery(req as unknown as Request).should.equal('foo');
     });
   });
 
