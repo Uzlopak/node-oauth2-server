@@ -50,14 +50,14 @@
   "scripts": {
     "lint": "tslint -p tsconfig.build.json -c tslint.json",
     "lint:all": "tslint -p tsconfig.json -c tslint.json",
-    "build:clean": "npx shx rm -rf ./dist",
-    "build": "npx npm-run-all build:clean build:test:*",
-    "build:test:src": "npx tsc -p tsconfig.json",
+    "build:clean": "shx rm -rf ./dist",
+    "build": "npm-run-all build:clean build:test:*",
+    "build:test:src": "tsc -p tsconfig.json",
     "build:test:package": "node ./scripts/build-prod.js",
-    "build:prod": "npx npm-run-all build:clean build:prod:*",
-    "build:prod:src": "npx tsc -p tsconfig.build.json",
+    "build:prod": "npm-run-all build:clean build:prod:*",
+    "build:prod:src": "tsc -p tsconfig.build.json",
     "build:prod:package": "node ./scripts/build-prod.js",
-    "test": "npx mocha 'test/**/*.spec.ts' --config 'test/.mocharc.jsonc'"
+    "test": "mocha 'test/**/*.spec.ts' --config 'test/.mocharc.jsonc'"
   },
   "repository": {
     "url": "https://github.com/oauthjs/node-oauth2-server.git",
