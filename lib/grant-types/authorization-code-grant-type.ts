@@ -117,6 +117,16 @@ export class AuthorizationCodeGrantType extends AbstractGrantType {
       );
     }
 
+    if (!code.scope) {
+      // RFC 6749 Section 3.3: the server may apply a default (which needs to be documented),
+      // or fail the request.
+      // Default behavior is to fail, a default scope can be provided by implementing the model
+      // accordingly.
+      throw new ServerError(
+        'Server error: authorize code does not have a scope',
+      );
+    }
+
     return code;
   }
 

@@ -614,6 +614,7 @@ describe('AuthorizationCodeGrantType integration', () => {
         authorizationCode: 12345,
         client: { id: 'foobar' },
         expiresAt: new Date(new Date().getTime() * 2),
+        scope: 'scope',
         user: {},
       };
       const client: any = { id: 'foobar' };
@@ -647,6 +648,7 @@ describe('AuthorizationCodeGrantType integration', () => {
         authorizationCode: 12345,
         client: { id: 'foobar' },
         expiresAt: new Date(new Date().getTime() * 2),
+        scope: 'scope',
         user: {},
       };
       const client: any = { id: 'foobar' };
@@ -678,6 +680,7 @@ describe('AuthorizationCodeGrantType integration', () => {
         authorizationCode: 12345,
         client: { id: 'foobar' },
         expiresAt: new Date(new Date().getTime() * 2),
+        scope: 'scope',
         user: {},
       };
       const client: any = { id: 'foobar' };

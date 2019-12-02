@@ -8,7 +8,7 @@ export interface Token {
   accessTokenExpiresAt?: Date;
   refreshToken?: string;
   refreshTokenExpiresAt?: Date;
-  scope?: string;
+  scope: string;
   client: Client;
   user: User;
   [key: string]: any;
